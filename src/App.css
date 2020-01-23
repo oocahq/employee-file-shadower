@@ -1,11 +1,64 @@
 .App {
   text-align: center;
+  background: rgba(245, 175, 75, 0.1);
+  height:100vh;
+  box-sizing: border-box;
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
+.header-text{
+  font-family: Gotham Rounded;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 54px;
+  line-height: 22px;
+
+  align-items: center;
+  text-align: center;
+}
+.yellow{
+  color:#F5AF4B;
+}
+.padding-top{
+  padding-top:300px;
+}
+
+.upload-bt{
+  position: absolute;
+  width: 654px;
+  height: 90px;
+  left: 391px;
+  top: 392px;
+  background: #FFFFFF;
+  border: 3px solid #F5AF4B;
+  box-sizing: border-box;
+  border-radius: 50px;
+  padding: 22px;
+
+  text-align: left;
+  color: #F5AF4B;
+  font-size: 35px;
+}
+
+.convert-bt {
+  box-sizing: border-box;
+position: absolute;
+width: 654px;
+height: 90px;
+left: 391px;
+top: 518px;
+  
+  background: #F5AF4B;
+  border-radius: 50px;
+  color: #fff;
+  font-size: 35px;
+  padding: 22px;
+  text-align: center;
+}
+
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -13,20 +66,6 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
 
 @keyframes App-logo-spin {
   from {
