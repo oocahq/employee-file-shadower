@@ -11,3 +11,46 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+@font-face {
+  font-family: "GothamRounded";
+  font-style: lighter;
+  font-weight: 200;
+  src: local("GothamRounded Light"), local("GothamRounded-Light"),
+    url("./assets/fonts/GothamRounded-Light.otf") 
+}
+@font-face {
+  font-family: "GothamRounded";
+  font-style: normal;
+  font-weight: 400;
+  src: local("GothamRounded Medium"), local("GothamRounded-Medium"),
+    url("./assets/fonts/GothamRounded-Medium.otf") 
+}
+
+@font-face {
+  font-family: "GothamRounded";
+  font-style: bold;
+  font-weight: 800;
+  src: local("GothamRounded Bold"), local("GothamRounded Bold"),
+    url("./assets/fonts/GothamRounded-Bold.otf") 
+} 
+
+
+div,
+button,
+label,
+input,
+textarea,
+select,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a {
+  font-family: "GothamRounded", "GothamRounded" !important;
+  box-sizing: border-box;
+}
