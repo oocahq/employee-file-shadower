@@ -10,28 +10,20 @@
   pointer-events: none;
 }
 .header-text{
-  font-family: Gotham Rounded;
-  font-style: normal;
-  font-weight: normal;
+  padding-top: 22vh;
+  margin-bottom: 47px;
   font-size: 54px;
-  line-height: 22px;
-
-  align-items: center;
-  text-align: center;
 }
 .yellow{
   color:#F5AF4B;
 }
-.padding-top{
-  padding-top:300px;
-}
 
 .upload-bt{
-  position: absolute;
+
   width: 654px;
   height: 90px;
-  left: 391px;
-  top: 392px;
+  display: block;
+  margin: 25px auto;
   background: #FFFFFF;
   border: 3px solid #F5AF4B;
   border-radius: 50px;
@@ -40,20 +32,21 @@
   text-align: left;
   color: #F5AF4B;
   font-size: 35px;
+ 
 }
 
 .convert-bt {
-  position: absolute;
+
   width: 654px;
   height: 90px;
-  left: 391px;
-  top: 518px;
-  
+  display: block;
+  margin: 25px auto;
   background: #F5AF4B;
   border-radius: 50px;
   color: #fff;
   font-size: 35px;
   padding: 22px;
   text-align: center;
+  
 }
 
