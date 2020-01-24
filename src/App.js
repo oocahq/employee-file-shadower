@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import * as R from 'ramda'
 import SHA256 from 'crypto-js/sha256'
 import ReactFileReader from 'react-file-reader'
 import './App.css'
@@ -8,11 +9,15 @@ const App = () => {
   const [fileName, setFileName] = useState(null)
   const [fileArray, setFileArray] = useState(null)
 
-  const convertEmailToHash = (emailArrays) => emailArrays.map((emailArray) => [SHA256(emailArray[0]).toString(), emailArray[1]])
+  const convertEmailToHash = (emailArrays) => emailArrays.map((emailArray) => {
+    const shadowedRow = emailArray
+    shadowedRow[0] = SHA256(emailArray[0]).toString()
+    return emailArray
+  })
 
   const handleFiles = (files) => {
     const reader = new FileReader()
-    reader.onload = function (e) {
+    reader.onload = (e) => {
       const arrayFromCsv = reader.result.split('\n').map((ar) => ar.split(','))
       setFileArray(arrayFromCsv)
       console.log('convertEmailToHash', convertEmailToHash(arrayFromCsv))
@@ -40,11 +45,9 @@ const App = () => {
           )}
         </button>
       </ReactFileReader>
-
       <div className="convert-bt">
           Convert
       </div>
-
     </div>
   )
 }
