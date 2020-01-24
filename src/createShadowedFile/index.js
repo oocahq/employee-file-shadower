@@ -53,30 +53,30 @@ const CreateShadowed = () => {
   }
 
   const getFileFromUpload = (files) => {
+    setFileName(null)
+    setShadowedFileCsv(null)
+
     const reader = new FileReader()
+    const uploadFileName = files[0].name
+    const fileType = uploadFileName.split('.')[1]
+    setFileName(uploadFileName)
 
-    // reader.onload = () => {
-    //   const arrayFromCsv = reader.result.split('\n').map((ar) => ar.split(','))
-    //   const shadowedData = convertEmailToHash(arrayFromCsv)
-    //   console.log('shadowedDAta', shadowedData)
-    //   convertHashToCsv(shadowedData)
-    //   setFileName(files[0].name)
-    // }
-    // reader.readAsText(files[0])
+    if (fileType !== 'csv') {
+      reader.onload = (event) => {
+        const workBook = XLSX.read(event.target.result, { type: 'binary' })
+        workBook.SheetNames.forEach((sheetName) => {
+          const csvUserData = XLSX.utils.make_csv(workBook.Sheets[sheetName])
+          convertCsvFileToShadowedFile(csvUserData)
+        })
+      }
 
-
-    reader.onload = (event) => {
-      const data = event.target.result
-      const workBook = XLSX.read(data, { type: 'binary' })
-      setFileName(files[0].name)
-      workBook.SheetNames.map((sheetName) => {
-        const csvUserData = XLSX.utils.make_csv(workBook.Sheets[sheetName])
-        convertCsvFileToShadowedFile(csvUserData)
-      })
+      reader.readAsBinaryString(files[0])
+    } else {
+      reader.onload = () => {
+        convertCsvFileToShadowedFile(reader.result)
+      }
+      reader.readAsText(files[0])
     }
-
-    reader.readAsBinaryString(files[0])
-    console.log('selectedFile', files[0])
   }
 
 
