@@ -1,18 +1,23 @@
 import React, { useState } from 'react'
+import * as R from 'ramda'
 import ReactFileReader from 'react-file-reader'
 import SHA256 from 'crypto-js/sha256'
 import './createShadowedFile.css'
 
 const CreateShadowed = () => {
   const [fileName, setFileName] = useState(null)
-  const [fileArray, setFileArray] = useState(null)
   const [shadowedFileCsv, setShadowedFileCsv] = useState(null)
 
-  const convertEmailToHash = (emailArrays) => emailArrays.map((emailArray) => {
-    const shadowedRow = emailArray
-    shadowedRow[0] = SHA256(emailArray[0]).toString()
-    return emailArray
-  })
+  const convertEmailToHash = (userData) => {
+    const result = userData.map((user) => {
+      const shadowedRow = user
+      shadowedRow[0] = SHA256(user[0]).toString()
+      return user
+    })
+    result[0][0] = 'email'
+    return result
+  }
+
 
   const autoDownload = () => {
     const encodedUri = encodeURI(shadowedFileCsv)
@@ -36,8 +41,8 @@ const CreateShadowed = () => {
     const reader = new FileReader()
     reader.onload = () => {
       const arrayFromCsv = reader.result.split('\n').map((ar) => ar.split(','))
-      setFileArray(arrayFromCsv)
       const shadowedData = convertEmailToHash(arrayFromCsv)
+      console.log('shadowedDAta', shadowedData)
       convertHashToCsv(shadowedData)
       setFileName(files[0].name)
     }
@@ -62,16 +67,18 @@ const CreateShadowed = () => {
           )}
         </button>
       </ReactFileReader>
-      <div className="convert-bt">
-          Convert
-      </div>
+
       {shadowedFileCsv
         ? (
           <button className="convert-bt" onClick={autoDownload} type="button">
-        Download
+            Click To Download
           </button>
         )
-        : null}
+        : (
+          <div className="convert-bt">
+            Convert
+          </div>
+        )}
     </>
   )
 }
