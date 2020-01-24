@@ -7,7 +7,7 @@ import './createShadowedFile.css'
 
 const FIRST_COLUMN_NAME = 'email'
 const CSV_HEADER_FILE_NAME = 'data:text/csv;charset=utf-8,'
-const EXPORTED_SHADOWED_FILE_NAME = 'shadowed-file.csv'
+const EXPORTED_SHADOWED_FILE_NAME = 'shadowed-employees-list-file.csv'
 
 const CreateShadowed = () => {
   const [fileName, setFileName] = useState(null)
