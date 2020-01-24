@@ -1,34 +1,51 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
+import SHA256 from 'crypto-js/sha256'
 import ReactFileReader from 'react-file-reader'
 import './App.css'
 
-const handleFiles = (files) => {
-  console.log('files[0]', files[0])
-  const reader = new FileReader()
-  reader.onload = function (e) {
-    console.log(reader.result)
+console.log('hash', SHA256('eao').toString())
+const App = () => {
+  const [fileName, setFileName] = useState(null)
+  const [fileArray, setFileArray] = useState(null)
+
+  const convertEmailToHash = (emailArrays) => emailArrays.map((emailArray) => [SHA256(emailArray[0]).toString(), emailArray[1]])
+
+  const handleFiles = (files) => {
+    const reader = new FileReader()
+    reader.onload = function (e) {
+      const arrayFromCsv = reader.result.split('\n').map((ar) => ar.split(','))
+      setFileArray(arrayFromCsv)
+      console.log('convertEmailToHash', convertEmailToHash(arrayFromCsv))
+      const { name } = files[0]
+      setFileName(name)
+    }
+    reader.readAsText(files[0])
   }
-  reader.readAsText(files[0])
-}
 
-const App = () => (
-  <div className="App">
-    <div className="header-text ">
+
+  return (
+    <div className="App">
+      <div className="header-text ">
         Convert To
-      <span className="shadowed-text"> Shadowed</span>
-      File
-    </div>
-    <ReactFileReader handleFiles={handleFiles} fileTypes={['.csv', '.xlsx']}>
-      <button className="upload-bt" type="submit">
-          Selected a File
-        <div className="upload-icon">+</div>
-      </button>
-    </ReactFileReader>
+        <span className="yellow"> Shadowed </span>
+        File
+      </div>
+      <ReactFileReader handleFiles={handleFiles} fileTypes={['.csv', '.xlsx', '.xls']}>
+        <button className="upload-bt" type="submit">
+          { fileName || (
+            <>
+              Selected a File
+              <div className="upload-icon">+</div>
+            </>
+          )}
+        </button>
+      </ReactFileReader>
 
-    <div className="convert-bt">
+      <div className="convert-bt">
           Convert
-    </div>
+      </div>
 
-  </div>
-)
+    </div>
+  )
+}
 export default App
