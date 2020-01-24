@@ -4,10 +4,10 @@ import SHA256 from 'crypto-js/sha256'
 import ReactFileReader from 'react-file-reader'
 import './App.css'
 
-console.log('hash', SHA256('eao').toString())
 const App = () => {
   const [fileName, setFileName] = useState(null)
   const [fileArray, setFileArray] = useState(null)
+  const [shadowedFileCsv, setShadowedFileCsv] = useState(null)
 
   const convertEmailToHash = (emailArrays) => emailArrays.map((emailArray) => {
     const shadowedRow = emailArray
@@ -15,14 +15,37 @@ const App = () => {
     return emailArray
   })
 
-  const handleFiles = (files) => {
+  const autoDownload = () => {
+    const encodedUri = encodeURI(shadowedFileCsv)
+    const link = document.createElement('a')
+    link.setAttribute('href', encodedUri)
+    link.setAttribute('download', 'shadowedFile.csv')
+    document.body.appendChild(link) // Required for FF
+
+    link.click()
+  }
+
+  const convertHashToCsv = (filesArray) => {
+    let csvContent = 'data:text/csv;charset=utf-8,'
+    console.log('filesArray', filesArray)
+    filesArray.map((rowArray) => {
+      const row = rowArray.join(',')
+      csvContent += `${row}\n`
+    })
+
+    console.log('csvContent', csvContent)
+    setShadowedFileCsv(csvContent)
+    // autoDownload(csvContent)
+  }
+
+  const getFileFromUpload = (files) => {
     const reader = new FileReader()
-    reader.onload = (e) => {
+    reader.onload = () => {
       const arrayFromCsv = reader.result.split('\n').map((ar) => ar.split(','))
       setFileArray(arrayFromCsv)
-      console.log('convertEmailToHash', convertEmailToHash(arrayFromCsv))
-      const { name } = files[0]
-      setFileName(name)
+      const shadowedData = convertEmailToHash(arrayFromCsv)
+      convertHashToCsv(shadowedData)
+      setFileName(files[0].name)
     }
     reader.readAsText(files[0])
   }
@@ -35,8 +58,8 @@ const App = () => {
         <span className="yellow"> Shadowed </span>
         File
       </div>
-      <ReactFileReader handleFiles={handleFiles} fileTypes={['.csv', '.xlsx', '.xls']}>
-        <button className="upload-bt" type="submit">
+      <ReactFileReader handleFiles={getFileFromUpload} fileTypes={['.csv', '.xlsx', '.xls']}>
+        <button className="upload-bt" type="button">
           { fileName || (
             <>
               Selected a File
@@ -48,6 +71,13 @@ const App = () => {
       <div className="convert-bt">
           Convert
       </div>
+      {shadowedFileCsv
+        ? (
+          <button className="convert-bt" onClick={autoDownload} type="button">
+        Download
+          </button>
+        )
+        : null}
     </div>
   )
 }
