@@ -27,7 +27,7 @@ const CreateShadowed = () => {
   }
 
 
-  const autoDownload = () => {
+  const handleDownload = () => {
     const encodedUri = encodeURI(shadowedFileCsv)
     const link = document.createElement('a')
     link.setAttribute('href', encodedUri)
@@ -48,9 +48,11 @@ const CreateShadowed = () => {
 
 
   const convertCsvFileToShadowedFile = () => {
-    const arrayFromCsv = csvRawData.split('\n').map((ar) => ar.split(','))
-    const shadowedData = convertEmailToHash(arrayFromCsv)
-    convertHashToCsv(shadowedData)
+    if (csvRawData) {
+      const arrayFromCsv = csvRawData.split('\n').map((ar) => ar.split(','))
+      const shadowedData = convertEmailToHash(arrayFromCsv)
+      convertHashToCsv(shadowedData)
+    }
   }
 
   const getFileFromUpload = (files) => {
@@ -98,10 +100,9 @@ const CreateShadowed = () => {
           )}
         </button>
       </ReactFileReader>
-
       {shadowedFileCsv
         ? (
-          <button className="convert-bt" onClick={autoDownload} type="button">
+          <button className="convert-bt" onClick={handleDownload} type="button">
             Click To Download
           </button>
         )
