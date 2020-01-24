@@ -20,20 +20,16 @@ const App = () => {
     const link = document.createElement('a')
     link.setAttribute('href', encodedUri)
     link.setAttribute('download', 'shadowedFile.csv')
-    document.body.appendChild(link) // Required for FF
-
+    document.body.appendChild(link)
     link.click()
   }
 
   const convertHashToCsv = (filesArray) => {
     let csvContent = 'data:text/csv;charset=utf-8,'
-    console.log('filesArray', filesArray)
     filesArray.map((rowArray) => {
       const row = rowArray.join(',')
       csvContent += `${row}\n`
     })
-
-    console.log('csvContent', csvContent)
     setShadowedFileCsv(csvContent)
     // autoDownload(csvContent)
   }
