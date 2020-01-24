@@ -11,6 +11,7 @@ const EXPORTED_SHADOWED_FILE_NAME = 'shadowed-file.csv'
 
 const CreateShadowed = () => {
   const [fileName, setFileName] = useState(null)
+  const [csvRawData, setCsvRawData] = useState(null)
   const [shadowedFileCsv, setShadowedFileCsv] = useState(null)
 
   const convertEmailToHash = (userData) => {
@@ -46,8 +47,8 @@ const CreateShadowed = () => {
   }
 
 
-  const convertCsvFileToShadowedFile = (csvUserData) => {
-    const arrayFromCsv = csvUserData.split('\n').map((ar) => ar.split(','))
+  const convertCsvFileToShadowedFile = () => {
+    const arrayFromCsv = csvRawData.split('\n').map((ar) => ar.split(','))
     const shadowedData = convertEmailToHash(arrayFromCsv)
     convertHashToCsv(shadowedData)
   }
@@ -66,14 +67,14 @@ const CreateShadowed = () => {
         const workBook = XLSX.read(event.target.result, { type: 'binary' })
         workBook.SheetNames.forEach((sheetName) => {
           const csvUserData = XLSX.utils.make_csv(workBook.Sheets[sheetName])
-          convertCsvFileToShadowedFile(csvUserData)
+          setCsvRawData(csvUserData)
         })
       }
 
       reader.readAsBinaryString(files[0])
     } else {
       reader.onload = () => {
-        convertCsvFileToShadowedFile(reader.result)
+        setCsvRawData(reader.result)
       }
       reader.readAsText(files[0])
     }
@@ -105,9 +106,9 @@ const CreateShadowed = () => {
           </button>
         )
         : (
-          <div className="convert-bt">
+          <button className="convert-bt" onClick={convertCsvFileToShadowedFile} type="button">
             Convert
-          </div>
+          </button>
         )}
     </>
   )
