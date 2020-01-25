@@ -90,7 +90,7 @@ const CreateShadowed = () => {
 
   const convertCsvFileToShadowedFile = () => {
     if (csvRawData) {
-      // you just to me to don't use something don't have meaning but you did it?
+      // you just toll me don't decleard var without meaning but you did it?
       // what is 'ar' means
       const arrayFromCsv = csvRawData.split('\n').map((ar) => ar.split(','))
       const shadowedData = convertEmailToHash(arrayFromCsv)
