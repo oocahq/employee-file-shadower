@@ -1,46 +1,50 @@
-.yellow{
-    color:#F5AF4B;
+.yellow {
+  color: #f5af4b;
 }
-.header-text{
-	padding-top: 22vh;
-	margin-bottom: 47px;
-	font-size: 40px;
-  }
-  
-.upload-bt{
-    width: 507px;
-    height: 66px;
-    display: block;
-    margin: 25px auto;
-    background: #FFFFFF;
-    border: 3px solid #F5AF4B;
-    border-radius: 50px;
-    padding: 17px;
-    text-align: left;
-    color: #F5AF4B;
-    font-size: 24px;
-    cursor: pointer;
+.header-text {
+  padding-top: 22vh;
+  margin-bottom: 47px;
+  font-size: 40px;
+}
+
+.upload-bt {
+  width: 507px;
+  height: 66px;
+  display: block;
+  margin: 25px auto;
+  background: #ffffff;
+  border: 3px solid #f5af4b;
+  border-radius: 50px;
+  padding: 17px;
+  text-align: left;
+  color: #f5af4b;
+  font-size: 24px;
+  cursor: pointer;
 }
 
 .convert-bt {
-	width: 507px;
-    height: 66px;
-	display: block;
-    margin: 25px auto;
-    background: #F5AF4B;
-    border-radius: 50px;
-    color: #fff;
-    font-size: 25px;
-    padding: 17px;
-    text-align: center;
-    cursor: pointer;
-   
+  width: 507px;
+  height: 66px;
+  display: block;
+  margin: 25px auto;
+  background: #f5af4b;
+  border-radius: 50px;
+  color: #fff;
+  font-size: 25px;
+  padding: 17px;
+  text-align: center;
+  cursor: pointer;
 }
-.upload-icon{
-    font-size: 55px;
-    margin-left: auto;
-    position: relative;
-    top: -46px;
-    width: 20px;
-    left: -17px;
+.upload-icon {
+  font-size: 55px;
+  margin-left: auto;
+  position: relative;
+  top: -46px;
+  width: 20px;
+  left: -17px;
+}
+
+.error-message{
+	color: #ff0000;
+	font-size: 25px;
 }
