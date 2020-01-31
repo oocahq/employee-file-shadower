@@ -26,7 +26,7 @@ const CreateShadowed = () => {
     if (userData.length > 0) {
       const result = userData.map((user) => {
         const shadowedRow = user
-        shadowedRow[0] = SHA256(user[0]).toString()
+        shadowedRow[0] = SHA256(user[0].trim().toLowerCase()).toString()
         return shadowedRow
       })
       result[0][0] = EMAIL_COLUMN
