@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import * as R from 'ramda'
 import XLSX from 'xlsx'
 import ReactFileReader from 'react-file-reader'
 import SHA256 from 'crypto-js/sha256'
@@ -24,11 +23,17 @@ const CreateShadowed = () => {
 
   const convertEmailToHash = (userData) => {
     if (userData.length > 0) {
-      const result = userData.map((user) => {
-        const shadowedRow = user
-        shadowedRow[0] = SHA256(user[0].trim().toLowerCase()).toString()
-        return shadowedRow
-      })
+      const result = userData
+        .reduce((res, user) => {
+          if(user[0].trim()) {
+            res.push(
+              Object.assign(user.slice(), {
+                0: SHA256(user[0].trim().toLowerCase()).toString()
+              })
+            )
+          }
+          return res
+        }, [])
       result[0][0] = EMAIL_COLUMN
       return result
     }
@@ -47,12 +52,10 @@ const CreateShadowed = () => {
   }
 
   const convertHashToCsv = (filesArray) => {
-    let csvContent = CSV_HEADER_FILE_NAME
-    filesArray.map((rowArray) => {
-      const row = rowArray.join(',')
-      csvContent += `${row}\n`
-    })
-    setShadowedFileCsv(csvContent)
+    let csvContent = filesArray
+      .map(rowArray => rowArray.join(','))
+      .join('\n')
+    setShadowedFileCsv(CSV_HEADER_FILE_NAME + csvContent)
   }
 
   const convertCsvFileToShadowedFile = () => {
