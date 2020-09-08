@@ -1,0 +1,28 @@
+steps:
+  - name: 'node:10-alpine'
+    entrypoint: sh 
+    args: 
+      - "-c"
+      - |
+        apk add --update \
+          python \
+          python-dev \
+          py-pip \
+          build-base \
+          git
+        yarn && \
+          yarn build
+  - name: 'oocahq/firebase-tools'
+    args: [ 'deploy', '--project', '$PROJECT_ID']
+    secretEnv: ['FIREBASE_TOKEN']
+timeout: 1200s
+
+secrets:
+- kmsKeyName: projects/$PROJECT_ID/locations/asia-southeast1/keyRings/firebase-hosting-app/cryptoKeys/firebase-token
+  secretEnv:
+    FIREBASE_TOKEN: $_FIREBASE_TOKEN
+
+substitutions:
+  _ENV: staging
+  _SERVICE_NAME: 'jok-opd-front-end'
+  _FIREBASE_TOKEN: ''
