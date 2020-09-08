@@ -22,12 +22,12 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-      env:
-        FIREBASE_PROJECT: ${{ secrets.FIREBASE_PROJECT }}
-        FIREBASE_HOSTING_SITE: ${{ secrets.FIREBASE_HOSTING_SITE }}
-        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
     - run: yarn
     - run: yarn build
-    - run: yarn firebase use $FIREBASE_PROJECT --token $FIREBASE_TOKEN
+    - run: yarn firebase use ${{ secrets.FIREBASE_PROJECT }} --token ${{ secrets.FIREBASE_TOKEN }}
     - run: yarn firebase:target
+      env:
+        FIREBASE_HOSTING_SITE: ${{ secrets.FIREBASE_HOSTING_SITE }}
     - run: yarn firebase:deploy
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
